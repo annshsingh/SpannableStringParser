@@ -1,5 +1,6 @@
 ![SpannableStringParser](images/logo.png)
 
+[![](https://jitpack.io/v/hitanshu-dhawan/SpannableStringParser.svg)](https://jitpack.io/#hitanshu-dhawan/SpannableStringParser)
 [![CircleCI](https://circleci.com/gh/hitanshu-dhawan/SpannableStringParser.svg?style=svg)](https://circleci.com/gh/hitanshu-dhawan/SpannableStringParser)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6ed7afcc6a144e4e814b4b91157ab472)](https://www.codacy.com/manual/hitanshu-dhawan/SpannableStringParser?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hitanshu-dhawan/SpannableStringParser&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/hitanshu-dhawan/SpannableStringParser/branch/master/graph/badge.svg)](https://codecov.io/gh/hitanshu-dhawan/SpannableStringParser)
@@ -29,8 +30,10 @@ val string = "Text with a { `foreground color` < color:#FF0000 /> } span".spanni
 
 This string can also come from a back-end server and if we wish to change the style of the text in future, the string can be easily changed from back-end and no front-end change will be required.
 
-# Have a Look
-Here are some examples...
+<b>SpannableStringParser</b> internally uses `Spannable`, which is more performant than `Html`.
+
+## Have a Look
+
 #### 1. Text having a property
 ```kotlin
 "Hello { `SpannableStringParser` < color:#0000FF /> }"
@@ -49,23 +52,7 @@ Here are some examples...
 ```
 ![](images/have_a_look_3.png)
 
-# Download
-Add JitPack repository to your root `build.gradle` file
-```
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-Add the dependency to your app `build.gradle` file
-```
-dependencies {
-    implementation 'com.github.hitanshu-dhawan:SpannableStringParser:1.0.x'
-}
-```
-
-# Usage
+## Usage
 
 - Syntax for "text" having a property
 ```kotlin
@@ -82,7 +69,22 @@ text_view.text = "{ `text` < property:value ; property:value /> }".spannify()
 text_view.text = "{ `text` < property:value ; property:value|value /> }".spannify()
 ```
 
-# Supported Properties
+- You can even add custom properties using the `spanner` method.
+```kotlin
+spanner { property, value ->
+    when (property) {
+        "sub-script" -> if (value == "true") {
+            return@spanner SubscriptSpan()
+        }
+        "super-script" -> if (value == "true") {
+            return@spanner SuperscriptSpan()
+        }
+    }
+    return@spanner null
+}
+```
+
+## Supported Properties
 
 #### `color`
 > The `color` property specifies the color of text.
@@ -115,7 +117,23 @@ You can add your custom properties using the `spanner` method.
 But! If you want any property to be added in SpannableStringParser, feel free to open issues/pull requests.
 <br><br>
 
-# Licence
+## Download
+Add JitPack repository to your root `build.gradle` file
+```
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+Add the dependency to your app `build.gradle` file
+```
+dependencies {
+    implementation 'com.github.hitanshu-dhawan:SpannableStringParser:1.0.0'
+}
+```
+
+## Licence
 ```
 Copyright (c) 2019 Hitanshu Dhawan
 
